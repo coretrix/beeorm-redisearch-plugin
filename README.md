@@ -1,1 +1,1 @@
-# playground
+# beeorm-redisearch-plugin

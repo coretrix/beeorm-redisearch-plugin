@@ -1,0 +1,31 @@
+version: '3'
+services:
+  mysql:
+    image: mysql:8.0
+    volumes:
+      - orm_data_mysql_redisearch:/var/lib/mysql
+    ports:
+      - "11004:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=redisearch
+      - MYSQL_PASSWORD=root
+
+  redisinsight:
+    image: redislabs/redisinsight:latest
+    ports:
+      - "8005:8001"
+    volumes:
+      - redisinsight_redisearch:/var/lib/redisinsight
+
+  redis:
+    image: redis/redis-stack-server
+    volumes:
+      - orm_data_redis_redisearch:/data
+    ports:
+      - "11002:6379"
+
+volumes:
+  orm_data_mysql_redisearch:
+  orm_data_redis_redisearch:
+  redisinsight_redisearch:
