@@ -29,7 +29,7 @@ const (
 var redisSearchIndicesInit = make(map[string]map[string]*RedisSearchIndex)
 var customIndicesInit = make(map[string][]*RedisSearchIndex)
 
-type RedisSearch struct {
+type Engine struct {
 	ctx                context.Context
 	pool               string
 	redis              beeorm.RedisCache
@@ -37,8 +37,8 @@ type RedisSearch struct {
 	redisSearchIndices map[string]*RedisSearchIndex
 }
 
-func NewRedisSearch(ctx context.Context, engine beeorm.Engine, pool string) *RedisSearch {
-	redisSearchInstance := &RedisSearch{
+func NewRedisSearch(ctx context.Context, engine beeorm.Engine, pool string) *Engine {
+	redisSearchInstance := &Engine{
 		ctx:                ctx,
 		pool:               pool,
 		engine:             engine,
@@ -57,11 +57,11 @@ func NewRedisSearch(ctx context.Context, engine beeorm.Engine, pool string) *Red
 	return redisSearchInstance
 }
 
-func (r *RedisSearch) GetRedisSearchIndex(indexName string) *RedisSearchIndex {
+func (r *Engine) GetRedisSearchIndex(indexName string) *RedisSearchIndex {
 	return r.redisSearchIndices[indexName]
 }
 
-func (r *RedisSearch) ForceReindex(index string) {
+func (r *Engine) ForceReindex(index string) {
 	def, has := r.redisSearchIndices[index]
 	if !has {
 		panic(errors.Errorf("unknown index %s in pool %s", index, r.pool))
@@ -75,17 +75,17 @@ func (r *RedisSearch) ForceReindex(index string) {
 	r.engine.GetEventBroker().Publish(RedisSearchIndexerChannel, event, nil)
 }
 
-func (r *RedisSearch) SearchRaw(index string, query *RedisSearchQuery, pager *beeorm.Pager) (total uint64, rows []interface{}) {
+func (r *Engine) SearchRaw(index string, query *RedisSearchQuery, pager *beeorm.Pager) (total uint64, rows []interface{}) {
 	return r.search(index, query, pager, false)
 }
 
-func (r *RedisSearch) SearchCount(index string, query *RedisSearchQuery) uint64 {
+func (r *Engine) SearchCount(index string, query *RedisSearchQuery) uint64 {
 	total, _ := r.search(index, query, beeorm.NewPager(0, 0), false)
 
 	return total
 }
 
-func (r *RedisSearch) SearchResult(index string, query *RedisSearchQuery, pager *beeorm.Pager) (total uint64, rows []*RedisSearchResult) {
+func (r *Engine) SearchResult(index string, query *RedisSearchQuery, pager *beeorm.Pager) (total uint64, rows []*RedisSearchResult) {
 	total, data := r.search(index, query, pager, false)
 	rows = make([]*RedisSearchResult, 0)
 	max := len(data) - 1
@@ -119,7 +119,7 @@ func (r *RedisSearch) SearchResult(index string, query *RedisSearchQuery, pager 
 	return total, rows
 }
 
-func (r *RedisSearch) SearchKeys(index string, query *RedisSearchQuery, pager *beeorm.Pager) (total uint64, keys []string) {
+func (r *Engine) SearchKeys(index string, query *RedisSearchQuery, pager *beeorm.Pager) (total uint64, keys []string) {
 	total, rows := r.search(index, query, pager, true)
 	keys = make([]string, len(rows))
 
@@ -130,7 +130,7 @@ func (r *RedisSearch) SearchKeys(index string, query *RedisSearchQuery, pager *b
 	return total, keys
 }
 
-func (r *RedisSearch) Aggregate(index string, query *RedisSearchAggregation, pager *beeorm.Pager) (result []map[string]string, totalRows uint64) {
+func (r *Engine) Aggregate(index string, query *RedisSearchAggregation, pager *beeorm.Pager) (result []map[string]string, totalRows uint64) {
 	if query.query == nil {
 		query.query = NewRedisSearchQuery()
 	}
@@ -189,7 +189,7 @@ func (r *RedisSearch) Aggregate(index string, query *RedisSearchAggregation, pag
 	return result, totalRows
 }
 
-func (r *RedisSearch) applyPager(pager *beeorm.Pager, args []interface{}) []interface{} {
+func (r *Engine) applyPager(pager *beeorm.Pager, args []interface{}) []interface{} {
 	if pager != nil {
 		if pager.PageSize > 10000 {
 			panic(fmt.Errorf("pager size exceeded limit 10000"))
@@ -205,12 +205,12 @@ func (r *RedisSearch) applyPager(pager *beeorm.Pager, args []interface{}) []inte
 	return args
 }
 
-func (r *RedisSearch) GetPoolConfig() beeorm.RedisPoolConfig {
+func (r *Engine) GetPoolConfig() beeorm.RedisPoolConfig {
 	return r.redis.GetPoolConfig()
 }
 
 //nolint //Function has too many statements
-func (r *RedisSearch) search(index string, query *RedisSearchQuery, pager *beeorm.Pager, noContent bool) (total uint64, rows []interface{}) {
+func (r *Engine) search(index string, query *RedisSearchQuery, pager *beeorm.Pager, noContent bool) (total uint64, rows []interface{}) {
 	index = r.redis.AddNamespacePrefix(index)
 	args := []interface{}{"FT.SEARCH", index}
 	args = r.buildQueryArgs(query, args)
@@ -335,7 +335,7 @@ func (r *RedisSearch) search(index string, query *RedisSearchQuery, pager *beeor
 }
 
 //nolint //cyclomatic complexity is high
-func (r *RedisSearch) buildQueryArgs(query *RedisSearchQuery, args []interface{}) []interface{} {
+func (r *Engine) buildQueryArgs(query *RedisSearchQuery, args []interface{}) []interface{} {
 	q := query.query
 
 	for field, in := range query.filtersNumeric {
@@ -421,7 +421,7 @@ func (r *RedisSearch) buildQueryArgs(query *RedisSearchQuery, args []interface{}
 }
 
 //nolint //cyclomatic complexity is high
-func (r *RedisSearch) createIndexArgs(index *RedisSearchIndex, indexName string) []interface{} {
+func (r *Engine) createIndexArgs(index *RedisSearchIndex, indexName string) []interface{} {
 	indexName = r.redis.AddNamespacePrefix(indexName)
 
 	if len(index.Prefixes) == 0 {
@@ -515,7 +515,7 @@ func (r *RedisSearch) createIndexArgs(index *RedisSearchIndex, indexName string)
 	return args
 }
 
-func (r *RedisSearch) createIndex(index *RedisSearchIndex) {
+func (r *Engine) createIndex(index *RedisSearchIndex) {
 	args := r.createIndexArgs(index, index.Name)
 	cmd := redis.NewStringCmd(r.ctx, args...)
 
@@ -531,7 +531,7 @@ func (r *RedisSearch) createIndex(index *RedisSearchIndex) {
 	checkError(err)
 }
 
-func (r *RedisSearch) ListIndices() []string {
+func (r *Engine) ListIndices() []string {
 	cmd := redis.NewStringSliceCmd(r.ctx, "FT._LIST")
 
 	hasRedisLogger, redisLogger := r.engine.HasRedisLogger()
@@ -565,7 +565,7 @@ func (r *RedisSearch) ListIndices() []string {
 	return res
 }
 
-func (r *RedisSearch) dropIndex(indexName string, withHashes bool) {
+func (r *Engine) dropIndex(indexName string, withHashes bool) {
 	indexName = r.redis.AddNamespacePrefix(indexName)
 	args := []interface{}{"FT.DROPINDEX", indexName}
 
@@ -596,7 +596,7 @@ func (r *RedisSearch) dropIndex(indexName string, withHashes bool) {
 }
 
 //nolint //Function has too many statements
-func (r *RedisSearch) Info(indexName string) *RedisSearchIndexInfo {
+func (r *Engine) Info(indexName string) *RedisSearchIndexInfo {
 	indexName = r.redis.AddNamespacePrefix(indexName)
 	cmd := redis.NewSliceCmd(r.ctx, "FT.INFO", indexName)
 
@@ -821,7 +821,7 @@ func (r *RedisSearch) Info(indexName string) *RedisSearchIndexInfo {
 	return info
 }
 
-func (r *RedisSearch) addAlter(index *RedisSearchIndex, documents uint64, changes []string) RedisSearchIndexAlter {
+func (r *Engine) addAlter(index *RedisSearchIndex, documents uint64, changes []string) RedisSearchIndexAlter {
 	query := fmt.Sprintf("%v", r.createIndexArgs(index, index.Name))[1:]
 	query = query[0 : len(query)-1]
 	alter := RedisSearchIndexAlter{Pool: r.redis.GetCode(), Name: index.Name, Query: query, Changes: changes, search: r}
@@ -834,12 +834,12 @@ func (r *RedisSearch) addAlter(index *RedisSearchIndex, documents uint64, change
 	return alter
 }
 
-func (r *RedisSearch) fillLogFields(handlers []beeorm.LogHandler, operation, query string, start *time.Time, err error) {
+func (r *Engine) fillLogFields(handlers []beeorm.LogHandler, operation, query string, start *time.Time, err error) {
 	fillLogFields(r.engine, handlers, r.redis.GetCode(), "redis", operation, query, start, false, err)
 }
 
 //nolint //Function has too many statements
-func (r *RedisSearch) GetRedisSearchAlters() (alters []RedisSearchIndexAlter) {
+func (r *Engine) GetRedisSearchAlters() (alters []RedisSearchIndexAlter) {
 	alters = make([]RedisSearchIndexAlter, 0)
 
 	for _, pool := range r.engine.GetRegistry().GetRedisPools() {
@@ -1027,7 +1027,7 @@ func (r *RedisSearch) GetRedisSearchAlters() (alters []RedisSearchIndexAlter) {
 }
 
 type RedisSearchIndexAlter struct {
-	search    *RedisSearch
+	search    *Engine
 	Name      string
 	Query     string
 	Documents uint64
