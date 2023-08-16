@@ -40,7 +40,7 @@ jobs:
 
       - name: Configure MySQL & Create databases
         run: |
-          sudo bash -c 'echo -e "[mysqld]\nport=10005\n" >> /etc/mysql/my.cnf'
+          sudo bash -c 'echo -e "[mysqld]\nport=13306\n" >> /etc/mysql/my.cnf'
           sudo systemctl start mysql.service
           mysql -e 'CREATE DATABASE redisearch;' -uroot -proot
 
