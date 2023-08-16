@@ -7,7 +7,7 @@ import (
 )
 
 // HandleRedisIndexerEvent : put this in your consumer from stream "RedisSearchIndexerChannel"
-func (r *Engine) HandleRedisIndexerEvent(indexName string) {
+func (r *RedisSearchEngine) HandleRedisIndexerEvent(indexName string) {
 	var indexDefinition *RedisSearchIndex
 
 	val, has := r.redisSearchIndices[indexName]

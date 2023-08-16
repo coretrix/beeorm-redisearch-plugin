@@ -10,7 +10,7 @@ import (
 	"github.com/latolukasz/beeorm/v2"
 )
 
-func (r *Engine) RedisSearchAggregate(
+func (r *RedisSearchEngine) RedisSearchAggregate(
 	entity beeorm.Entity,
 	query *RedisSearchAggregation,
 	pager *beeorm.Pager,
@@ -42,13 +42,13 @@ func (r *Engine) RedisSearchAggregate(
 	return r.Aggregate(redisSearchSchema.index.Name, query, pager)
 }
 
-func (r *Engine) RedisSearchIds(entity beeorm.Entity, query *RedisSearchQuery, pager *beeorm.Pager) (ids []uint64, totalRows uint64) {
+func (r *RedisSearchEngine) RedisSearchIds(entity beeorm.Entity, query *RedisSearchQuery, pager *beeorm.Pager) (ids []uint64, totalRows uint64) {
 	schema := r.engine.GetRegistry().GetEntitySchemaForEntity(entity)
 
 	return redisSearchQuery(r, schema, query, pager)
 }
 
-func (r *Engine) RedisSearch(
+func (r *RedisSearchEngine) RedisSearch(
 	query *RedisSearchQuery,
 	pager *beeorm.Pager,
 	entities interface{},
@@ -57,14 +57,14 @@ func (r *Engine) RedisSearch(
 	return redisSearchBase(r, entities, query, pager, references...)
 }
 
-func (r *Engine) RedisSearchCount(entity beeorm.Entity, query *RedisSearchQuery) (totalRows uint64) {
+func (r *RedisSearchEngine) RedisSearchCount(entity beeorm.Entity, query *RedisSearchQuery) (totalRows uint64) {
 	schema := r.engine.GetRegistry().GetEntitySchemaForEntity(entity)
 	_, totalRows = redisSearchQuery(r, schema, query, beeorm.NewPager(0, 0))
 
 	return totalRows
 }
 
-func redisSearchBase(redisSearch *Engine,
+func redisSearchBase(redisSearch *RedisSearchEngine,
 	entities interface{},
 	query *RedisSearchQuery,
 	pager *beeorm.Pager,
@@ -87,11 +87,11 @@ func redisSearchBase(redisSearch *Engine,
 	return total
 }
 
-func (r *Engine) RedisSearchOne(entity beeorm.Entity, query *RedisSearchQuery, references ...string) (found bool) {
+func (r *RedisSearchEngine) RedisSearchOne(entity beeorm.Entity, query *RedisSearchQuery, references ...string) (found bool) {
 	return redisSearchOne(r, entity, query, references...)
 }
 
-func redisSearchOne(redisSearch *Engine, entity beeorm.Entity, query *RedisSearchQuery, references ...string) (found bool) {
+func redisSearchOne(redisSearch *RedisSearchEngine, entity beeorm.Entity, query *RedisSearchQuery, references ...string) (found bool) {
 	schema := redisSearch.engine.GetRegistry().GetEntitySchemaForEntity(entity)
 
 	ids, total := redisSearchQuery(redisSearch, schema, query, beeorm.NewPager(1, 1))
@@ -105,7 +105,7 @@ func redisSearchOne(redisSearch *Engine, entity beeorm.Entity, query *RedisSearc
 }
 
 //nolint //cyclomatic complexity is high
-func redisSearchQuery(redisSearch *Engine,
+func redisSearchQuery(redisSearch *RedisSearchEngine,
 	schema beeorm.EntitySchema,
 	query *RedisSearchQuery,
 	pager *beeorm.Pager,
