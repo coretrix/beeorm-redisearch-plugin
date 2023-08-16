@@ -209,7 +209,7 @@ func (r *RedisSearch) GetPoolConfig() beeorm.RedisPoolConfig {
 	return r.redis.GetPoolConfig()
 }
 
-//nolint: gocyclo, funlen // info
+// nolint: gocyclo, funlen // info
 func (r *RedisSearch) search(index string, query *RedisSearchQuery, pager *beeorm.Pager, noContent bool) (total uint64, rows []interface{}) {
 	index = r.redis.AddNamespacePrefix(index)
 	args := []interface{}{"FT.SEARCH", index}
@@ -334,7 +334,7 @@ func (r *RedisSearch) search(index string, query *RedisSearchQuery, pager *beeor
 	return total, res[1:]
 }
 
-//nolint: gocyclo // info // info
+// nolint: gocyclo // info // info
 func (r *RedisSearch) buildQueryArgs(query *RedisSearchQuery, args []interface{}) []interface{} {
 	q := query.query
 
@@ -420,7 +420,7 @@ func (r *RedisSearch) buildQueryArgs(query *RedisSearchQuery, args []interface{}
 	return args
 }
 
-//nolint: gocyclo // info
+// nolint: gocyclo // info
 func (r *RedisSearch) createIndexArgs(index *RedisSearchIndex, indexName string) []interface{} {
 	indexName = r.redis.AddNamespacePrefix(indexName)
 
@@ -594,11 +594,9 @@ func (r *RedisSearch) dropIndex(indexName string, withHashes bool) {
 
 	_, err = cmd.Result()
 	checkError(err)
-
-	return
 }
 
-//nolint: gocyclo, funlen // info
+// nolint: gocyclo, funlen // info
 func (r *RedisSearch) Info(indexName string) *RedisSearchIndexInfo {
 	indexName = r.redis.AddNamespacePrefix(indexName)
 	cmd := redis.NewSliceCmd(r.ctx, "FT.INFO", indexName)
@@ -841,7 +839,7 @@ func (r *RedisSearch) fillLogFields(handlers []beeorm.LogHandler, operation, que
 	fillLogFields(r.engine, handlers, r.redis.GetCode(), "redis", operation, query, start, false, err)
 }
 
-//nolint: gocyclo, funlen // info
+// nolint: gocyclo, funlen // info
 func (r *RedisSearch) GetRedisSearchAlters() (alters []RedisSearchIndexAlter) {
 	alters = make([]RedisSearchIndexAlter, 0)
 
@@ -1129,7 +1127,7 @@ func getNow(has bool) *time.Time {
 	return &s
 }
 
-//nolint: gocyclo // info // info
+// nolint: gocyclo // info // info
 func fillLogFields(
 	engine beeorm.Engine,
 	handlers []beeorm.LogHandler,

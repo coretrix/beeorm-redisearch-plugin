@@ -104,7 +104,7 @@ func redisSearchOne(redisSearch *RedisSearch, entity beeorm.Entity, query *Redis
 	return found
 }
 
-//nolint: gocyclo // info
+// nolint: gocyclo // info
 func redisSearchQuery(redisSearch *RedisSearch,
 	schema beeorm.EntitySchema,
 	query *RedisSearchQuery,
