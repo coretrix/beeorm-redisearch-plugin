@@ -1,10 +1,11 @@
 package test
 
 import (
-	"github.com/iliyanm/redisearch"
-	"github.com/iliyanm/redisearch/test/customindex"
-	"github.com/iliyanm/redisearch/test/entity"
 	"github.com/latolukasz/beeorm/v2"
+
+	redisearch "github.com/coretrix/beeorm-redisearch-plugin"
+	"github.com/coretrix/beeorm-redisearch-plugin/test/customindex"
+	"github.com/coretrix/beeorm-redisearch-plugin/test/entity"
 )
 
 func reindexCustomIndexEntityOne(engine beeorm.Engine) {

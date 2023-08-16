@@ -1,10 +1,11 @@
 package redisearch
 
 import (
-	"github.com/latolukasz/beeorm/v2"
 	"reflect"
 	"strconv"
 	"sync"
+
+	"github.com/latolukasz/beeorm/v2"
 )
 
 const (
@@ -95,6 +96,7 @@ func (p *BeeormRedisearchPlugin) InterfaceInitEntitySchema(schema beeorm.Settabl
 		if isPointer {
 			typeName = "*" + structField.Type.Elem().Name()
 		}
+
 		if isSlice {
 			typeName = "[]" + structField.Type.Elem().Name()
 		}

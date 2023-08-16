@@ -25,11 +25,11 @@ go get -u github.com/coretrix/beeorm-redisearch-plugin
 ```go
     beeormRegistry := beeorm.NewRegistry() // new BeeORM registry
     
-    beeormRegistry.RegisterMySQLPool("root:root@tcp(localhost:11004)/redisearch?multiStatements=true", beeorm.MySQLPoolOptions{}, "default") // mysql connection
+    beeormRegistry.RegisterMySQLPool("root:root@tcp(localhost:13306)/redisearch?multiStatements=true", beeorm.MySQLPoolOptions{}, "default") // mysql connection
     
-    beeormRegistry.RegisterRedis("localhost:11002", "", 1, "default") // pool needed for redis cache
-    beeormRegistry.RegisterRedis("localhost:11002", "", 2, "streams_pool") // pool needed for redis streams, which are used for force reindex and indexing custom indexes
-    beeormRegistry.RegisterRedis("localhost:11002", "", 0, "search_pool") // pool needed for redisearch itself, its important that it uses db 0!
+    beeormRegistry.RegisterRedis("localhost:16379", "", 1, "default") // pool needed for redis cache
+    beeormRegistry.RegisterRedis("localhost:16379", "", 2, "streams_pool") // pool needed for redis streams, which are used for force reindex and indexing custom indexes
+    beeormRegistry.RegisterRedis("localhost:16379", "", 0, "search_pool") // pool needed for redisearch itself, its important that it uses db 0!
     
     beeormRegistry.RegisterEntity(&entity.TestEntityOne{}) // redisearch enabled entities, see entities section
     beeormRegistry.RegisterEntity(&entity.TestEntityTwo{})

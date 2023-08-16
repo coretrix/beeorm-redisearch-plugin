@@ -1,9 +1,10 @@
 package redisearch
 
 import (
-	"github.com/latolukasz/beeorm/v2"
 	"strconv"
 	"strings"
+
+	"github.com/latolukasz/beeorm/v2"
 )
 
 func GetEntityIDs(redisSearch *RedisSearch, index string, q *RedisSearchQuery, pager *beeorm.Pager) ([]uint64, uint64) {
@@ -13,6 +14,7 @@ func GetEntityIDs(redisSearch *RedisSearch, index string, q *RedisSearchQuery, p
 	}
 
 	ids := make([]uint64, len(keys))
+
 	for i, key := range keys {
 		id, err := strconv.ParseUint(strings.Split(key, ":")[1], 10, 64)
 		if err != nil {

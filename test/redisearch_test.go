@@ -2,16 +2,17 @@ package test
 
 import (
 	"context"
-	"github.com/iliyanm/redisearch/test/customindex"
-	"github.com/latolukasz/beeorm/v2"
 	"strconv"
 	"testing"
 	"time"
 
-	"github.com/iliyanm/redisearch"
-	"github.com/iliyanm/redisearch/test/entity"
+	"github.com/latolukasz/beeorm/v2"
 	"github.com/stretchr/testify/assert"
 	"github.com/xorcare/pointer"
+
+	redisearch "github.com/coretrix/beeorm-redisearch-plugin"
+	"github.com/coretrix/beeorm-redisearch-plugin/test/customindex"
+	"github.com/coretrix/beeorm-redisearch-plugin/test/entity"
 )
 
 func TestQueryField(t *testing.T) {

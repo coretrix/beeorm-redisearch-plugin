@@ -5,7 +5,7 @@ services:
     volumes:
       - orm_data_mysql_redisearch:/var/lib/mysql
     ports:
-      - "11004:3306"
+      - "13306:3306"
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=redisearch
@@ -14,16 +14,16 @@ services:
   redisinsight:
     image: redislabs/redisinsight:latest
     ports:
-      - "8005:8001"
+      - "18001:8001"
     volumes:
       - redisinsight_redisearch:/var/lib/redisinsight
 
   redis:
-    image: redis/redis-stack-server
+    image: redis/redis-stack:6.2.6-v7
     volumes:
       - orm_data_redis_redisearch:/data
     ports:
-      - "11002:6379"
+      - "16379:6379"
 
 volumes:
   orm_data_mysql_redisearch:

@@ -2,13 +2,14 @@ package test
 
 import (
 	"context"
-	"github.com/iliyanm/redisearch/test/customindex"
-	"github.com/latolukasz/beeorm/v2"
 	"testing"
 
-	"github.com/iliyanm/redisearch"
-	"github.com/iliyanm/redisearch/test/entity"
+	"github.com/latolukasz/beeorm/v2"
 	"github.com/latolukasz/beeorm/v2/plugins/fake_delete"
+
+	redisearch "github.com/coretrix/beeorm-redisearch-plugin"
+	"github.com/coretrix/beeorm-redisearch-plugin/test/customindex"
+	"github.com/coretrix/beeorm-redisearch-plugin/test/entity"
 )
 
 var beeormEngine beeorm.Engine
@@ -22,11 +23,11 @@ func createTestEngine(ctx context.Context) (beeorm.Engine, *redisearch.RedisSear
 	if beeormEngine == nil {
 		beeormRegistry := beeorm.NewRegistry()
 
-		beeormRegistry.RegisterMySQLPool("root:root@tcp(localhost:11004)/redisearch?multiStatements=true", beeorm.MySQLPoolOptions{}, "default")
+		beeormRegistry.RegisterMySQLPool("root:root@tcp(localhost:13306)/redisearch?multiStatements=true", beeorm.MySQLPoolOptions{}, "default")
 
-		beeormRegistry.RegisterRedis("localhost:11002", "", 1, "default")
-		beeormRegistry.RegisterRedis("localhost:11002", "", 2, "streams_pool")
-		beeormRegistry.RegisterRedis("localhost:11002", "", 0, "search_pool")
+		beeormRegistry.RegisterRedis("localhost:16379", "", 1, "default")
+		beeormRegistry.RegisterRedis("localhost:16379", "", 2, "streams_pool")
+		beeormRegistry.RegisterRedis("localhost:16379", "", 0, "search_pool")
 
 		beeormRegistry.RegisterEntity(&entity.TestEntityOne{})
 		beeormRegistry.RegisterEntity(&entity.TestEntityTwo{})

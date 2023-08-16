@@ -1,4 +1,4 @@
-module github.com/iliyanm/redisearch
+module github.com/coretrix/beeorm-redisearch-plugin
 
 go 1.19
 

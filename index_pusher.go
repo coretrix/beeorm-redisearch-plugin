@@ -1,9 +1,10 @@
 package redisearch
 
 import (
-	"github.com/latolukasz/beeorm/v2"
 	"strconv"
 	"strings"
+
+	"github.com/latolukasz/beeorm/v2"
 )
 
 type RedisSearchIndexPusher interface {

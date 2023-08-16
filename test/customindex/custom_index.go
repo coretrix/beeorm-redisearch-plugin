@@ -1,11 +1,12 @@
 package customindex
 
 import (
-	"github.com/latolukasz/beeorm/v2"
 	"strconv"
 
-	"github.com/iliyanm/redisearch"
-	"github.com/iliyanm/redisearch/test/entity"
+	"github.com/latolukasz/beeorm/v2"
+
+	redisearch "github.com/coretrix/beeorm-redisearch-plugin"
+	"github.com/coretrix/beeorm-redisearch-plugin/test/entity"
 )
 
 const EntityOneCustomIndex = "custom_index_entity_one"

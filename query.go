@@ -2,11 +2,12 @@ package redisearch
 
 import (
 	"fmt"
-	"github.com/latolukasz/beeorm/v2"
 	"reflect"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/latolukasz/beeorm/v2"
 )
 
 func (r *RedisSearch) RedisSearchAggregate(

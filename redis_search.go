@@ -3,13 +3,13 @@ package redisearch
 import (
 	"context"
 	"fmt"
-	"github.com/latolukasz/beeorm/v2"
 	"math"
 	"reflect"
 	"strconv"
 	"strings"
 	"time"
 
+	"github.com/latolukasz/beeorm/v2"
 	"github.com/pkg/errors"
 	"github.com/redis/go-redis/v9"
 )

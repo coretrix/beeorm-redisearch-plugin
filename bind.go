@@ -6,11 +6,12 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/latolukasz/beeorm/v2"
 	"math"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/latolukasz/beeorm/v2"
 )
 
 type tableSchemaRedisSearch struct {
@@ -210,24 +211,24 @@ func buildUintPointerField(tableSchema *tableSchemaRedisSearch, columnName, type
 		tableSchema.mapBindToRedisSearch[columnName] = func(val interface{}) interface{} {
 			if val == nil || val == "NULL" {
 				return RedisSearchNullNumber
+			}
+
+			valUint := uint64(0)
+
+			if value, ok := val.(uint64); ok {
+				valUint = value
 			} else {
-				valUint := uint64(0)
+				var err error
 
-				if value, ok := val.(uint64); ok {
-					valUint = value
-				} else {
-					var err error
+				valUint, err = strconv.ParseUint(val.(string), 10, 64)
 
-					valUint, err = strconv.ParseUint(val.(string), 10, 64)
-
-					if err != nil {
-						panic(err)
-					}
+				if err != nil {
+					panic(err)
 				}
+			}
 
-				if valUint > math.MaxInt32 {
-					panic(errors.New("integer too high for redis search sort field"))
-				}
+			if valUint > math.MaxInt32 {
+				panic(errors.New("integer too high for redis search sort field"))
 			}
 
 			return val
@@ -287,27 +288,27 @@ func buildIntPointerField(tableSchema *tableSchemaRedisSearch, columnName, typeN
 		tableSchema.mapBindToRedisSearch[columnName] = func(val interface{}) interface{} {
 			if val == nil || val == "NULL" {
 				return RedisSearchNullNumber
-			} else {
-				valInt := int64(0)
-
-				if value, ok := val.(int64); ok {
-					valInt = value
-				} else {
-					var err error
-
-					valInt, err = strconv.ParseInt(val.(string), 10, 64)
-
-					if err != nil {
-						panic(err)
-					}
-				}
-
-				if valInt > math.MaxInt32 {
-					panic(errors.New("integer too high for redis search sort field"))
-				}
-
-				return val
 			}
+
+			valInt := int64(0)
+
+			if value, ok := val.(int64); ok {
+				valInt = value
+			} else {
+				var err error
+
+				valInt, err = strconv.ParseInt(val.(string), 10, 64)
+
+				if err != nil {
+					panic(err)
+				}
+			}
+
+			if valInt > math.MaxInt32 {
+				panic(errors.New("integer too high for redis search sort field"))
+			}
+
+			return val
 		}
 	} else {
 		tableSchema.mapBindToRedisSearch[columnName] = defaultRedisSearchMapperNullableNumeric
@@ -340,7 +341,15 @@ func buildStringField(tableSchema *tableSchemaRedisSearch, columnName string, ha
 	}
 }
 
-func buildStringPointerField(tableSchema *tableSchemaRedisSearch, columnName string, hasSortable, hasSearchable, hasEnum bool, stem string, hasStem bool) {
+func buildStringPointerField(
+	tableSchema *tableSchemaRedisSearch,
+	columnName string,
+	hasSortable bool,
+	hasSearchable bool,
+	hasEnum bool,
+	stem string,
+	hasStem bool,
+) {
 	if hasEnum {
 		tableSchema.index.AddTagField(columnName, hasSortable, !hasSearchable, ",")
 		tableSchema.mapBindToRedisSearch[columnName] = defaultRedisSearchMapperNullableStringPointer
@@ -472,6 +481,7 @@ func buildPointersSliceField(tableSchema *tableSchemaRedisSearch, columnName str
 			}
 
 			result := ""
+
 			for i, v := range holder {
 				if id, ok := v["ID"]; ok {
 					result += "e" + strconv.FormatFloat(id.(float64), 'f', -1, 64)
