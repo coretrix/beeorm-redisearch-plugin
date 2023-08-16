@@ -209,7 +209,7 @@ func (r *RedisSearch) GetPoolConfig() beeorm.RedisPoolConfig {
 	return r.redis.GetPoolConfig()
 }
 
-// nolint: gocyclo, funlen // info
+//nolint //Function has too many statements
 func (r *RedisSearch) search(index string, query *RedisSearchQuery, pager *beeorm.Pager, noContent bool) (total uint64, rows []interface{}) {
 	index = r.redis.AddNamespacePrefix(index)
 	args := []interface{}{"FT.SEARCH", index}
@@ -334,7 +334,7 @@ func (r *RedisSearch) search(index string, query *RedisSearchQuery, pager *beeor
 	return total, res[1:]
 }
 
-// nolint: gocyclo // info // info
+//nolint //cyclomatic complexity is high
 func (r *RedisSearch) buildQueryArgs(query *RedisSearchQuery, args []interface{}) []interface{} {
 	q := query.query
 
@@ -420,7 +420,7 @@ func (r *RedisSearch) buildQueryArgs(query *RedisSearchQuery, args []interface{}
 	return args
 }
 
-// nolint: gocyclo // info
+//nolint //cyclomatic complexity is high
 func (r *RedisSearch) createIndexArgs(index *RedisSearchIndex, indexName string) []interface{} {
 	indexName = r.redis.AddNamespacePrefix(indexName)
 
@@ -565,7 +565,6 @@ func (r *RedisSearch) ListIndices() []string {
 	return res
 }
 
-// nolint: gocyclo // info
 func (r *RedisSearch) dropIndex(indexName string, withHashes bool) {
 	indexName = r.redis.AddNamespacePrefix(indexName)
 	args := []interface{}{"FT.DROPINDEX", indexName}
@@ -596,7 +595,7 @@ func (r *RedisSearch) dropIndex(indexName string, withHashes bool) {
 	checkError(err)
 }
 
-// nolint: gocyclo, funlen // info
+//nolint //Function has too many statements
 func (r *RedisSearch) Info(indexName string) *RedisSearchIndexInfo {
 	indexName = r.redis.AddNamespacePrefix(indexName)
 	cmd := redis.NewSliceCmd(r.ctx, "FT.INFO", indexName)
@@ -839,7 +838,7 @@ func (r *RedisSearch) fillLogFields(handlers []beeorm.LogHandler, operation, que
 	fillLogFields(r.engine, handlers, r.redis.GetCode(), "redis", operation, query, start, false, err)
 }
 
-// nolint: gocyclo, funlen // info
+//nolint //Function has too many statements
 func (r *RedisSearch) GetRedisSearchAlters() (alters []RedisSearchIndexAlter) {
 	alters = make([]RedisSearchIndexAlter, 0)
 
@@ -1127,7 +1126,6 @@ func getNow(has bool) *time.Time {
 	return &s
 }
 
-// nolint: gocyclo // info // info
 func fillLogFields(
 	engine beeorm.Engine,
 	handlers []beeorm.LogHandler,

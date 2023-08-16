@@ -37,7 +37,7 @@ func (p *BeeormRedisearchPlugin) GetCode() string {
 	return pluginCode
 }
 
-// nolint: gocyclo, funlen // info
+//nolint //Function has too many statements
 func (p *BeeormRedisearchPlugin) InterfaceInitEntitySchema(schema beeorm.SettableEntitySchema, registry *beeorm.Registry) error {
 	p.mu.Lock()
 	defer p.mu.Unlock()

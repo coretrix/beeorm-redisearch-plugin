@@ -104,7 +104,7 @@ func redisSearchOne(redisSearch *RedisSearch, entity beeorm.Entity, query *Redis
 	return found
 }
 
-// nolint: gocyclo // info
+//nolint //cyclomatic complexity is high
 func redisSearchQuery(redisSearch *RedisSearch,
 	schema beeorm.EntitySchema,
 	query *RedisSearchQuery,
