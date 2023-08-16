@@ -73,7 +73,7 @@ func (tableSchema *tableSchemaRedisSearch) fillRedisSearchFromBind(redisSetter b
 	}
 }
 
-// nolint: funlen // info
+//nolint //Function has too many statements
 func (tableSchema *tableSchemaRedisSearch) buildRedisSearchIndex(tableSchemaBeeORM beeorm.SettableEntitySchema, registry *beeorm.Registry) error {
 	if len(tableSchema.index.Fields) <= 0 {
 		return nil
