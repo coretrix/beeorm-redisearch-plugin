@@ -70,7 +70,7 @@ func (r *RedisSearch) ForceReindex(index string) {
 	r.dropIndex(index, true)
 	r.createIndex(def)
 
-	event := redisIndexerEvent{Index: index}
+	event := IndexerEventRedisearch{Index: index}
 
 	r.engine.GetEventBroker().Publish(RedisSearchIndexerChannel, event, nil)
 }

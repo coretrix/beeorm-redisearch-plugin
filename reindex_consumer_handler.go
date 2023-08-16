@@ -59,6 +59,6 @@ func (r *RedisSearch) HandleRedisIndexerEvent(indexName string) {
 	}
 }
 
-type redisIndexerEvent struct {
+type IndexerEventRedisearch struct {
 	Index string
 }
