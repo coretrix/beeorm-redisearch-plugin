@@ -7,7 +7,7 @@ import (
 	"github.com/latolukasz/beeorm/v2"
 )
 
-func GetEntityIDs(redisSearch *RedisSearch, index string, q *RedisSearchQuery, pager *beeorm.Pager) ([]uint64, uint64) {
+func GetEntityIDs(redisSearch *Engine, index string, q *RedisSearchQuery, pager *beeorm.Pager) ([]uint64, uint64) {
 	total, keys := redisSearch.SearchKeys(index, q, pager)
 	if total == 0 || len(keys) == 0 {
 		return nil, 0

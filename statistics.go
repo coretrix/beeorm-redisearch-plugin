@@ -5,7 +5,7 @@ type RedisSearchStatistics struct {
 	Info  *RedisSearchIndexInfo
 }
 
-func (r *RedisSearch) GetRedisSearchStatistics() []*RedisSearchStatistics {
+func (r *Engine) GetRedisSearchStatistics() []*RedisSearchStatistics {
 	result := make([]*RedisSearchStatistics, 0)
 
 	for _, indexName := range r.ListIndices() {

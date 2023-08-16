@@ -19,7 +19,7 @@ func TestMain(m *testing.M) {
 	beeormEngine.GetRedis("streams_pool").FlushDB()
 }
 
-func createTestEngine(ctx context.Context) (beeorm.Engine, *redisearch.RedisSearch) {
+func createTestEngine(ctx context.Context) (beeorm.Engine, *redisearch.Engine) {
 	if beeormEngine == nil {
 		beeormRegistry := beeorm.NewRegistry()
 
