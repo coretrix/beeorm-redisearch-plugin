@@ -37,6 +37,7 @@ func (p *BeeormRedisearchPlugin) GetCode() string {
 	return pluginCode
 }
 
+//nolint: gocyclo, funlen // info
 func (p *BeeormRedisearchPlugin) InterfaceInitEntitySchema(schema beeorm.SettableEntitySchema, registry *beeorm.Registry) error {
 	p.mu.Lock()
 	defer p.mu.Unlock()
