@@ -115,14 +115,14 @@ func TestFilterNotString(t *testing.T) {
 	q.FilterNotString("String", "test string 1")
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(1), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(1), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(2), results[0].ID)
 
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(1), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(1), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(2), results[0].ID)
 }
@@ -173,7 +173,7 @@ func TestFilterInt(t *testing.T) {
 	q.FilterInt("Int", 3, 4, 5)
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(2), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(2), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(2), results[0].ID)
 	assert.Equal(t, uint64(3), results[1].ID)
@@ -181,7 +181,7 @@ func TestFilterInt(t *testing.T) {
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(2), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(2), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(2), results[0].ID)
 	assert.Equal(t, uint64(3), results[1].ID)
@@ -207,7 +207,7 @@ func TestFilterNotInt(t *testing.T) {
 	q.FilterNotInt("Int", 3, 4, 5)
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(2), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(2), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(1), results[0].ID)
 	assert.Equal(t, uint64(4), results[1].ID)
@@ -215,7 +215,7 @@ func TestFilterNotInt(t *testing.T) {
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(2), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(2), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(1), results[0].ID)
 	assert.Equal(t, uint64(4), results[1].ID)
@@ -244,7 +244,7 @@ func TestFilterIntPtr(t *testing.T) {
 	q.FilterInt("IntPtr", 3, 4, 5)
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(2), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(2), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(2), results[0].ID)
 	assert.Equal(t, uint64(3), results[1].ID)
@@ -252,7 +252,7 @@ func TestFilterIntPtr(t *testing.T) {
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(2), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(2), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(2), results[0].ID)
 	assert.Equal(t, uint64(3), results[1].ID)
@@ -281,14 +281,14 @@ func TestFilterIntNull(t *testing.T) {
 	q.FilterIntNull("IntPtr")
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(1), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(1), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(4), results[0].ID)
 
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(1), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(1), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(4), results[0].ID)
 }
@@ -316,7 +316,7 @@ func TestFilterNotIntNull(t *testing.T) {
 	q.FilterNotIntNull("IntPtr")
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(4), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(4), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(1), results[0].ID)
 	assert.Equal(t, uint64(2), results[1].ID)
@@ -326,7 +326,7 @@ func TestFilterNotIntNull(t *testing.T) {
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(4), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(4), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(1), results[0].ID)
 	assert.Equal(t, uint64(2), results[1].ID)
@@ -357,7 +357,7 @@ func TestFilterIntGreaterEqual(t *testing.T) {
 	q.FilterIntGreaterEqual("IntPtr", 5)
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(2), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(2), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(3), results[0].ID)
 	assert.Equal(t, uint64(5), results[1].ID)
@@ -365,7 +365,7 @@ func TestFilterIntGreaterEqual(t *testing.T) {
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(2), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(2), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(3), results[0].ID)
 	assert.Equal(t, uint64(5), results[1].ID)
@@ -394,14 +394,14 @@ func TestFilterIntGreater(t *testing.T) {
 	q.FilterIntGreater("IntPtr", 5)
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(1), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(1), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(5), results[0].ID)
 
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(1), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(1), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(5), results[0].ID)
 }
@@ -429,7 +429,7 @@ func TestFilterIntLessEqual(t *testing.T) {
 	q.FilterIntLessEqual("IntPtr", 5)
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(4), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(4), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(1), results[0].ID)
 	assert.Equal(t, uint64(2), results[1].ID)
@@ -439,7 +439,7 @@ func TestFilterIntLessEqual(t *testing.T) {
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(4), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(4), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(1), results[0].ID)
 	assert.Equal(t, uint64(2), results[1].ID)
@@ -470,7 +470,7 @@ func TestFilterIntLess(t *testing.T) {
 	q.FilterIntLess("IntPtr", 5)
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(3), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(3), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(1), results[0].ID)
 	assert.Equal(t, uint64(2), results[1].ID)
@@ -479,7 +479,7 @@ func TestFilterIntLess(t *testing.T) {
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(3), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(3), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(1), results[0].ID)
 	assert.Equal(t, uint64(2), results[1].ID)
@@ -506,7 +506,7 @@ func TestFilterIntMinMax(t *testing.T) {
 	q.FilterIntMinMax("Int", 3, 6)
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(2), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(2), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(2), results[0].ID)
 	assert.Equal(t, uint64(3), results[1].ID)
@@ -514,7 +514,7 @@ func TestFilterIntMinMax(t *testing.T) {
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(2), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(2), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(2), results[0].ID)
 	assert.Equal(t, uint64(3), results[1].ID)
@@ -540,7 +540,7 @@ func TestFilterIntMinMaxInclusive(t *testing.T) {
 	q.FilterIntMinMax("Int", 4, 5)
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(2), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(2), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(2), results[0].ID)
 	assert.Equal(t, uint64(3), results[1].ID)
@@ -548,7 +548,7 @@ func TestFilterIntMinMaxInclusive(t *testing.T) {
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(2), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(2), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(2), results[0].ID)
 	assert.Equal(t, uint64(3), results[1].ID)
@@ -574,7 +574,7 @@ func TestFilterFloatMinMax(t *testing.T) {
 	q.FilterFloatMinMax("Float", 4.2, 4.5)
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(2), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(2), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(2), results[0].ID)
 	assert.Equal(t, uint64(3), results[1].ID)
@@ -582,7 +582,7 @@ func TestFilterFloatMinMax(t *testing.T) {
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(2), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(2), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(2), results[0].ID)
 	assert.Equal(t, uint64(3), results[1].ID)
@@ -608,7 +608,7 @@ func TestFilterFloatMinMaxInclusive(t *testing.T) {
 	q.FilterFloatMinMax("Float", 4.3, 4.4)
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(2), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(2), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(2), results[0].ID)
 	assert.Equal(t, uint64(3), results[1].ID)
@@ -616,7 +616,7 @@ func TestFilterFloatMinMaxInclusive(t *testing.T) {
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(2), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(2), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(2), results[0].ID)
 	assert.Equal(t, uint64(3), results[1].ID)
@@ -677,7 +677,7 @@ func TestFilterFloatGreaterEqual(t *testing.T) {
 	q.FilterFloatGreaterEqual("Float", 3.1)
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(2), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(2), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(1), results[0].ID)
 	assert.Equal(t, uint64(2), results[1].ID)
@@ -685,7 +685,7 @@ func TestFilterFloatGreaterEqual(t *testing.T) {
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(2), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(2), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(1), results[0].ID)
 	assert.Equal(t, uint64(2), results[1].ID)
@@ -708,14 +708,14 @@ func TestFilterFloatGreater(t *testing.T) {
 	q.FilterFloatGreater("Float", 3.1)
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(1), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(1), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(1), results[0].ID)
 
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(1), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(1), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(1), results[0].ID)
 }
@@ -737,7 +737,7 @@ func TestFilterFloatLessEqual(t *testing.T) {
 	q.FilterFloatLessEqual("Float", 3.1)
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(2), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(2), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(2), results[0].ID)
 	assert.Equal(t, uint64(3), results[1].ID)
@@ -745,7 +745,7 @@ func TestFilterFloatLessEqual(t *testing.T) {
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(2), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(2), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(2), results[0].ID)
 	assert.Equal(t, uint64(3), results[1].ID)
@@ -768,14 +768,14 @@ func TestFilterFloatLess(t *testing.T) {
 	q.FilterFloatLess("Float", 3.1)
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(1), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(1), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(3), results[0].ID)
 
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(1), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(1), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(3), results[0].ID)
 }
@@ -794,14 +794,14 @@ func TestFilterFloatNull(t *testing.T) {
 	q.FilterFloatNull("FloatPtr")
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(1), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(1), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(1), results[0].ID)
 
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(1), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(1), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(1), results[0].ID)
 }
@@ -832,7 +832,7 @@ func TestFilterDateMinMax(t *testing.T) {
 	)
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(3), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(3), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(2), results[0].ID)
 	assert.Equal(t, uint64(3), results[1].ID)
@@ -841,7 +841,7 @@ func TestFilterDateMinMax(t *testing.T) {
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(3), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(3), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(2), results[0].ID)
 	assert.Equal(t, uint64(3), results[1].ID)
@@ -871,7 +871,7 @@ func TestFilterDate(t *testing.T) {
 	q.FilterDate("Time", time.Date(2000, 5, 12, 2, 0, 0, 0, time.UTC))
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(2), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(2), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(3), results[0].ID)
 	assert.Equal(t, uint64(4), results[1].ID)
@@ -879,7 +879,7 @@ func TestFilterDate(t *testing.T) {
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(2), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(2), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(3), results[0].ID)
 	assert.Equal(t, uint64(4), results[1].ID)
@@ -908,7 +908,7 @@ func TestFilterDatePtr(t *testing.T) {
 	q.FilterDate("TimePtr", time.Date(2000, 5, 12, 2, 0, 0, 0, time.UTC))
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(2), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(2), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(3), results[0].ID)
 	assert.Equal(t, uint64(4), results[1].ID)
@@ -916,7 +916,7 @@ func TestFilterDatePtr(t *testing.T) {
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(2), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(2), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(3), results[0].ID)
 	assert.Equal(t, uint64(4), results[1].ID)
@@ -945,7 +945,7 @@ func TestFilterNotDate(t *testing.T) {
 	q.FilterNotDate("Time", time.Date(2000, 5, 12, 2, 0, 0, 0, time.UTC))
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(3), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(3), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(1), results[0].ID)
 	assert.Equal(t, uint64(2), results[1].ID)
@@ -954,7 +954,7 @@ func TestFilterNotDate(t *testing.T) {
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(3), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(3), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(1), results[0].ID)
 	assert.Equal(t, uint64(2), results[1].ID)
@@ -984,7 +984,7 @@ func TestFilterDateNull(t *testing.T) {
 	q.FilterDateNull("TimePtr")
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(2), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(2), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(1), results[0].ID)
 	assert.Equal(t, uint64(4), results[1].ID)
@@ -992,7 +992,7 @@ func TestFilterDateNull(t *testing.T) {
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(2), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(2), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(1), results[0].ID)
 	assert.Equal(t, uint64(4), results[1].ID)
@@ -1021,7 +1021,7 @@ func TestFilterNotDateNull(t *testing.T) {
 	q.FilterNotDateNull("TimePtr")
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(3), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(3), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(2), results[0].ID)
 	assert.Equal(t, uint64(3), results[1].ID)
@@ -1030,7 +1030,7 @@ func TestFilterNotDateNull(t *testing.T) {
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(3), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(3), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(2), results[0].ID)
 	assert.Equal(t, uint64(3), results[1].ID)
@@ -1060,7 +1060,7 @@ func TestFilterDateGreaterEqual(t *testing.T) {
 	q.FilterDateGreaterEqual("Time", time.Date(2000, 5, 12, 2, 0, 0, 0, time.UTC))
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(3), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(3), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(3), results[0].ID)
 	assert.Equal(t, uint64(4), results[1].ID)
@@ -1069,7 +1069,7 @@ func TestFilterDateGreaterEqual(t *testing.T) {
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(3), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(3), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(3), results[0].ID)
 	assert.Equal(t, uint64(4), results[1].ID)
@@ -1099,7 +1099,7 @@ func TestFilterDateGreater(t *testing.T) {
 	q.FilterDateGreater("Time", time.Date(2000, 5, 12, 2, 0, 0, 0, time.UTC))
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(2), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(2), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(4), results[0].ID)
 	assert.Equal(t, uint64(5), results[1].ID)
@@ -1107,7 +1107,7 @@ func TestFilterDateGreater(t *testing.T) {
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(2), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(2), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(4), results[0].ID)
 	assert.Equal(t, uint64(5), results[1].ID)
@@ -1136,7 +1136,7 @@ func TestFilterDateLessEqual(t *testing.T) {
 	q.FilterDateLessEqual("Time", time.Date(2000, 5, 12, 2, 0, 0, 0, time.UTC))
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(3), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(3), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(1), results[0].ID)
 	assert.Equal(t, uint64(2), results[1].ID)
@@ -1145,7 +1145,7 @@ func TestFilterDateLessEqual(t *testing.T) {
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(3), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(3), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(1), results[0].ID)
 	assert.Equal(t, uint64(2), results[1].ID)
@@ -1175,7 +1175,7 @@ func TestFilterDateLess(t *testing.T) {
 	q.FilterDateLess("Time", time.Date(2000, 5, 12, 2, 0, 0, 0, time.UTC))
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(2), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(2), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(1), results[0].ID)
 	assert.Equal(t, uint64(2), results[1].ID)
@@ -1183,7 +1183,7 @@ func TestFilterDateLess(t *testing.T) {
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(2), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(2), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(1), results[0].ID)
 	assert.Equal(t, uint64(2), results[1].ID)
@@ -1216,7 +1216,7 @@ func TestFilterDateTimeMinMax(t *testing.T) {
 	)
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(3), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(3), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(2), results[0].ID)
 	assert.Equal(t, uint64(3), results[1].ID)
@@ -1225,7 +1225,7 @@ func TestFilterDateTimeMinMax(t *testing.T) {
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(3), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(3), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(2), results[0].ID)
 	assert.Equal(t, uint64(3), results[1].ID)
@@ -1255,14 +1255,14 @@ func TestFilterDateTime(t *testing.T) {
 	q.FilterDateTime("Time", time.Date(2000, 5, 12, 2, 0, 0, 0, time.UTC))
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(1), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(1), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(2), results[0].ID)
 
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(1), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(1), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(2), results[0].ID)
 }
@@ -1290,7 +1290,7 @@ func TestFilterDateTimeGreaterEqual(t *testing.T) {
 	q.FilterDateTimeGreaterEqual("Time", time.Date(2000, 5, 12, 3, 0, 0, 0, time.UTC))
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(3), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(3), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(3), results[0].ID)
 	assert.Equal(t, uint64(4), results[1].ID)
@@ -1299,7 +1299,7 @@ func TestFilterDateTimeGreaterEqual(t *testing.T) {
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(3), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(3), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(3), results[0].ID)
 	assert.Equal(t, uint64(4), results[1].ID)
@@ -1329,7 +1329,7 @@ func TestFilterDateTimeGreater(t *testing.T) {
 	q.FilterDateTimeGreater("Time", time.Date(2000, 5, 12, 3, 0, 0, 0, time.UTC))
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(2), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(2), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(4), results[0].ID)
 	assert.Equal(t, uint64(5), results[1].ID)
@@ -1337,7 +1337,7 @@ func TestFilterDateTimeGreater(t *testing.T) {
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(2), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(2), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(4), results[0].ID)
 	assert.Equal(t, uint64(5), results[1].ID)
@@ -1366,7 +1366,7 @@ func TestFilterDateTimeLessEqual(t *testing.T) {
 	q.FilterDateTimeLessEqual("Time", time.Date(2000, 5, 12, 3, 0, 0, 0, time.UTC))
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(3), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(3), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(1), results[0].ID)
 	assert.Equal(t, uint64(2), results[1].ID)
@@ -1375,7 +1375,7 @@ func TestFilterDateTimeLessEqual(t *testing.T) {
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(3), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(3), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(1), results[0].ID)
 	assert.Equal(t, uint64(2), results[1].ID)
@@ -1405,7 +1405,7 @@ func TestFilterDateTimeLess(t *testing.T) {
 	q.FilterDateTimeLess("Time", time.Date(2000, 5, 12, 3, 0, 0, 0, time.UTC))
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(2), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(2), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(1), results[0].ID)
 	assert.Equal(t, uint64(2), results[1].ID)
@@ -1413,7 +1413,7 @@ func TestFilterDateTimeLess(t *testing.T) {
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(2), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(2), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(1), results[0].ID)
 	assert.Equal(t, uint64(2), results[1].ID)
@@ -1433,14 +1433,14 @@ func TestFilterTag(t *testing.T) {
 	q.FilterTag("StringEnum", entity.TestEntityEnumTwo)
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(1), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(1), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(2), results[0].ID)
 
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(1), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(1), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(2), results[0].ID)
 }
@@ -1459,14 +1459,14 @@ func TestFilterNotTag(t *testing.T) {
 	q.FilterNotTag("StringEnum", entity.TestEntityEnumTwo)
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(1), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(1), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(1), results[0].ID)
 
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(1), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(1), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(1), results[0].ID)
 }
@@ -1488,14 +1488,14 @@ func TestFilterTagPtr(t *testing.T) {
 	q.FilterTag("StringEnumPtr", entity.TestEntityEnumTwo)
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(1), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(1), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(3), results[0].ID)
 
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(1), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(1), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(3), results[0].ID)
 }
@@ -1517,14 +1517,14 @@ func TestFilterNotTagPtr(t *testing.T) {
 	q.FilterNotTag("StringEnumPtr", entity.TestEntityEnumTwo, "NULL")
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(1), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(1), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(1), results[0].ID)
 
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(1), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(1), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(1), results[0].ID)
 }
@@ -1546,7 +1546,7 @@ func TestFilterTagNull(t *testing.T) {
 	q.FilterTag("StringEnumPtr", entity.TestEntityEnumTwo, "")
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(2), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(2), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(2), results[0].ID)
 	assert.Equal(t, uint64(3), results[1].ID)
@@ -1554,7 +1554,7 @@ func TestFilterTagNull(t *testing.T) {
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(2), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(2), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(2), results[0].ID)
 	assert.Equal(t, uint64(3), results[1].ID)
@@ -1574,14 +1574,14 @@ func TestFilterBool(t *testing.T) {
 	q.FilterBool("Bool", true)
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(1), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(1), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(2), results[0].ID)
 
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(1), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(1), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(2), results[0].ID)
 }
@@ -1600,14 +1600,14 @@ func TestFilterNotBool(t *testing.T) {
 	q.FilterBool("Bool", false)
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(1), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(1), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(1), results[0].ID)
 
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(1), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(1), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(1), results[0].ID)
 }
@@ -1629,14 +1629,14 @@ func TestFilterBoolPtr(t *testing.T) {
 	q.FilterBool("BoolPtr", true)
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(1), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(1), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(2), results[0].ID)
 
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(1), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(1), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(2), results[0].ID)
 }
@@ -1658,14 +1658,14 @@ func TestFilterNotBoolPtr(t *testing.T) {
 	q.FilterBool("BoolPtr", false)
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(1), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(1), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(1), results[0].ID)
 
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(1), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(1), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(1), results[0].ID)
 }
@@ -1690,7 +1690,7 @@ func TestSortIntAsc(t *testing.T) {
 	q.Sort("Int", false)
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(4), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(4), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(2), results[0].ID)
 	assert.Equal(t, uint64(4), results[1].ID)
@@ -1700,7 +1700,7 @@ func TestSortIntAsc(t *testing.T) {
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(4), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(4), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(2), results[0].ID)
 	assert.Equal(t, uint64(4), results[1].ID)
@@ -1728,7 +1728,7 @@ func TestSortIntDesc(t *testing.T) {
 	q.Sort("Int", true)
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(4), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(4), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(3), results[0].ID)
 	assert.Equal(t, uint64(1), results[1].ID)
@@ -1738,7 +1738,7 @@ func TestSortIntDesc(t *testing.T) {
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(4), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(4), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(3), results[0].ID)
 	assert.Equal(t, uint64(1), results[1].ID)
@@ -1766,7 +1766,7 @@ func TestSortIntAscPtr(t *testing.T) {
 	q.Sort("IntPtr", false)
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(4), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(4), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(2), results[0].ID)
 	assert.Equal(t, uint64(4), results[1].ID)
@@ -1776,7 +1776,7 @@ func TestSortIntAscPtr(t *testing.T) {
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(4), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(4), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(2), results[0].ID)
 	assert.Equal(t, uint64(4), results[1].ID)
@@ -1804,7 +1804,7 @@ func TestSortIntDescPtr(t *testing.T) {
 	q.Sort("IntPtr", true)
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(4), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(4), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(3), results[0].ID)
 	assert.Equal(t, uint64(1), results[1].ID)
@@ -1814,7 +1814,7 @@ func TestSortIntDescPtr(t *testing.T) {
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(4), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(4), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(3), results[0].ID)
 	assert.Equal(t, uint64(1), results[1].ID)
@@ -1834,7 +1834,7 @@ func TestFilterUint(t *testing.T) {
 	q.FilterUint("ID", 3, 4, 5)
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(2), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(2), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(3), results[0].ID)
 	assert.Equal(t, uint64(4), results[1].ID)
@@ -1842,7 +1842,7 @@ func TestFilterUint(t *testing.T) {
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(2), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(2), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(3), results[0].ID)
 	assert.Equal(t, uint64(4), results[1].ID)
@@ -1871,7 +1871,7 @@ func TestFilterUintPtr(t *testing.T) {
 	q.FilterUint("UintPtr", 3, 4, 5)
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(2), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(2), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(2), results[0].ID)
 	assert.Equal(t, uint64(3), results[1].ID)
@@ -1879,7 +1879,7 @@ func TestFilterUintPtr(t *testing.T) {
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(2), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(2), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(2), results[0].ID)
 	assert.Equal(t, uint64(3), results[1].ID)
@@ -1908,14 +1908,14 @@ func TestFilterUintNull(t *testing.T) {
 	q.FilterUintNull("UintPtr")
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(1), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(1), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(4), results[0].ID)
 
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(1), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(1), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(4), results[0].ID)
 }
@@ -1943,7 +1943,7 @@ func TestFilterUintGreaterEqual(t *testing.T) {
 	q.FilterUintGreaterEqual("UintPtr", 5)
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(2), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(2), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(3), results[0].ID)
 	assert.Equal(t, uint64(5), results[1].ID)
@@ -1951,7 +1951,7 @@ func TestFilterUintGreaterEqual(t *testing.T) {
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(2), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(2), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(3), results[0].ID)
 	assert.Equal(t, uint64(5), results[1].ID)
@@ -1980,14 +1980,14 @@ func TestFilterUintGreater(t *testing.T) {
 	q.FilterUintGreater("UintPtr", 5)
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(1), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(1), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(5), results[0].ID)
 
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(1), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(1), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(5), results[0].ID)
 }
@@ -2015,7 +2015,7 @@ func TestFilterUintLessEqual(t *testing.T) {
 	q.FilterUintLessEqual("UintPtr", 5)
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(4), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(4), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(1), results[0].ID)
 	assert.Equal(t, uint64(2), results[1].ID)
@@ -2025,7 +2025,7 @@ func TestFilterUintLessEqual(t *testing.T) {
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(4), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(4), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(1), results[0].ID)
 	assert.Equal(t, uint64(2), results[1].ID)
@@ -2056,7 +2056,7 @@ func TestFilterUintLess(t *testing.T) {
 	q.FilterUintLess("UintPtr", 5)
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(3), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(3), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(1), results[0].ID)
 	assert.Equal(t, uint64(2), results[1].ID)
@@ -2065,7 +2065,7 @@ func TestFilterUintLess(t *testing.T) {
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(3), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(3), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(1), results[0].ID)
 	assert.Equal(t, uint64(2), results[1].ID)
@@ -2086,7 +2086,7 @@ func TestFilterUintMinMax(t *testing.T) {
 	q.FilterUintMinMax("ID", 2, 5)
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(4), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(4), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(2), results[0].ID)
 	assert.Equal(t, uint64(3), results[1].ID)
@@ -2096,7 +2096,7 @@ func TestFilterUintMinMax(t *testing.T) {
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(4), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(4), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(2), results[0].ID)
 	assert.Equal(t, uint64(3), results[1].ID)
@@ -2119,14 +2119,14 @@ func TestFilterIntWithPrefixSearch(t *testing.T) {
 	q.AppendQueryRaw("@String: *iyan")
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(1), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(1), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(2), results[0].ID)
 
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(1), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(1), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(2), results[0].ID)
 }
@@ -2147,7 +2147,7 @@ func TestFilterIntWithSuffixSearch(t *testing.T) {
 	q.Sort("Int", false)
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(2), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(2), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(2), results[0].ID)
 	assert.Equal(t, uint64(4), results[1].ID)
@@ -2155,7 +2155,7 @@ func TestFilterIntWithSuffixSearch(t *testing.T) {
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(2), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(2), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(2), results[0].ID)
 	assert.Equal(t, uint64(4), results[1].ID)
@@ -2177,7 +2177,7 @@ func TestFilterIntWithPrefixAndSuffixSearch(t *testing.T) {
 	q.Sort("Int", false)
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(2), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(2), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(2), results[0].ID)
 	assert.Equal(t, uint64(4), results[1].ID)
@@ -2185,7 +2185,7 @@ func TestFilterIntWithPrefixAndSuffixSearch(t *testing.T) {
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(2), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(2), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(2), results[0].ID)
 	assert.Equal(t, uint64(4), results[1].ID)
@@ -2206,7 +2206,7 @@ func TestPrefixAndSuffixSearch(t *testing.T) {
 	q.Sort("Int", false)
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(3), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(3), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(2), results[0].ID)
 	assert.Equal(t, uint64(4), results[1].ID)
@@ -2215,7 +2215,7 @@ func TestPrefixAndSuffixSearch(t *testing.T) {
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(3), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(3), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, uint64(2), results[0].ID)
 	assert.Equal(t, uint64(4), results[1].ID)
@@ -2240,7 +2240,7 @@ func TestSearchForReference(t *testing.T) {
 	q.Sort("ForeignKey", true)
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(2), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results, "ForeignKey"))
+	assert.Equal(t, uint64(2), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results, "ForeignKey"))
 
 	assert.Equal(t, uint64(3), results[0].ID)
 	assert.Equal(t, uint64(1), results[1].ID)
@@ -2250,7 +2250,7 @@ func TestSearchForReference(t *testing.T) {
 	redisSearch.HandleRedisIndexerEvent("entity.TestEntityOne")
 
 	results = make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(2), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results, "ForeignKey"))
+	assert.Equal(t, uint64(2), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results, "ForeignKey"))
 
 	assert.Equal(t, uint64(3), results[0].ID)
 	assert.Equal(t, uint64(1), results[1].ID)
@@ -2456,7 +2456,7 @@ func TestFilterManyReferenceNotIn(t *testing.T) {
 	q.FilterManyReferenceNotIn("Many", uint64(1))
 
 	results := make([]*entity.TestEntityOne, 0)
-	assert.Equal(t, uint64(1), redisSearch.RedisSearchMany(q, beeorm.NewPager(1, 100), &results))
+	assert.Equal(t, uint64(1), redisSearch.RedisSearch(q, beeorm.NewPager(1, 100), &results))
 
 	assert.Equal(t, "s2", results[0].String)
 }
