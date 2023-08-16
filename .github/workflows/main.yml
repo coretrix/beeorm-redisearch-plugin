@@ -28,7 +28,7 @@ jobs:
       redis-test:
         image: redis/redis-stack:6.2.6-v7
         ports:
-          - 10002:6379
+          - 16379:6379
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
