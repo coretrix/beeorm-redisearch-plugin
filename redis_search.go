@@ -209,6 +209,7 @@ func (r *RedisSearch) GetPoolConfig() beeorm.RedisPoolConfig {
 	return r.redis.GetPoolConfig()
 }
 
+// nolint: gocyclo, funlen // info
 func (r *RedisSearch) search(index string, query *RedisSearchQuery, pager *beeorm.Pager, noContent bool) (total uint64, rows []interface{}) {
 	index = r.redis.AddNamespacePrefix(index)
 	args := []interface{}{"FT.SEARCH", index}
@@ -333,6 +334,7 @@ func (r *RedisSearch) search(index string, query *RedisSearchQuery, pager *beeor
 	return total, res[1:]
 }
 
+// nolint: gocyclo // info // info
 func (r *RedisSearch) buildQueryArgs(query *RedisSearchQuery, args []interface{}) []interface{} {
 	q := query.query
 
@@ -418,6 +420,7 @@ func (r *RedisSearch) buildQueryArgs(query *RedisSearchQuery, args []interface{}
 	return args
 }
 
+// nolint: gocyclo // info
 func (r *RedisSearch) createIndexArgs(index *RedisSearchIndex, indexName string) []interface{} {
 	indexName = r.redis.AddNamespacePrefix(indexName)
 
@@ -562,6 +565,7 @@ func (r *RedisSearch) ListIndices() []string {
 	return res
 }
 
+// nolint: gocyclo // info
 func (r *RedisSearch) dropIndex(indexName string, withHashes bool) {
 	indexName = r.redis.AddNamespacePrefix(indexName)
 	args := []interface{}{"FT.DROPINDEX", indexName}
@@ -592,7 +596,7 @@ func (r *RedisSearch) dropIndex(indexName string, withHashes bool) {
 	checkError(err)
 }
 
-//nolint // info
+// nolint: gocyclo, funlen // info
 func (r *RedisSearch) Info(indexName string) *RedisSearchIndexInfo {
 	indexName = r.redis.AddNamespacePrefix(indexName)
 	cmd := redis.NewSliceCmd(r.ctx, "FT.INFO", indexName)
@@ -604,6 +608,7 @@ func (r *RedisSearch) Info(indexName string) *RedisSearchIndexInfo {
 	err := r.redis.Process(r.ctx, cmd)
 
 	has := true
+
 	if err != nil && err.Error() == "Unknown Index name" {
 		err = nil
 		has = false
@@ -621,6 +626,7 @@ func (r *RedisSearch) Info(indexName string) *RedisSearchIndexInfo {
 	res, err := cmd.Result()
 
 	checkError(err)
+
 	info := &RedisSearchIndexInfo{}
 
 	for i, row := range res {
@@ -634,6 +640,7 @@ func (r *RedisSearch) Info(indexName string) *RedisSearchIndexInfo {
 		case "index_options":
 			infoOptions := res[i+1].([]interface{})
 			options := RedisSearchIndexInfoOptions{}
+
 			for _, opt := range infoOptions {
 				switch opt {
 				case "NOFREQS":
@@ -646,10 +653,12 @@ func (r *RedisSearch) Info(indexName string) *RedisSearchIndexInfo {
 					options.MaxTextFields = true
 				}
 			}
+
 			info.Options = options
 		case "index_definition":
 			def := res[i+1].([]interface{})
 			definition := RedisSearchIndexInfoDefinition{}
+
 			for subKey, subValue := range def {
 				switch subValue {
 				case "key_type":
@@ -657,9 +666,11 @@ func (r *RedisSearch) Info(indexName string) *RedisSearchIndexInfo {
 				case "prefixes":
 					prefixesRaw := def[subKey+1].([]interface{})
 					prefixes := make([]string, len(prefixesRaw))
+
 					for k, v := range prefixesRaw {
 						prefixes[k] = v.(string)
 					}
+
 					definition.Prefixes = prefixes
 				case "language_field":
 					definition.LanguageField = def[subKey+1].(string)
@@ -669,14 +680,17 @@ func (r *RedisSearch) Info(indexName string) *RedisSearchIndexInfo {
 					definition.ScoreField = def[subKey+1].(string)
 				}
 			}
+
 			info.Definition = definition
 		case "fields":
 			fieldsRaw := res[i+1].([]interface{})
 			fields := make([]RedisSearchIndexInfoField, len(fieldsRaw))
+
 			for i, v := range fieldsRaw {
 				def := v.([]interface{})
 				field := RedisSearchIndexInfoField{Name: def[0].(string)}
 				def = def[1:]
+
 				for subKey, subValue := range def {
 					switch subValue {
 					case "type":
@@ -693,15 +707,19 @@ func (r *RedisSearch) Info(indexName string) *RedisSearchIndexInfo {
 						field.TagSeparator = def[subKey+1].(string)
 					}
 				}
+
 				fields[i] = field
 			}
+
 			info.Fields = fields
 		case "attributes":
 			fieldsRaw := res[i+1].([]interface{})
 			fields := make([]RedisSearchIndexInfoField, len(fieldsRaw))
+
 			for i, v := range fieldsRaw {
 				def := v.([]interface{})
 				field := RedisSearchIndexInfoField{}
+
 				for subKey, subValue := range def {
 					switch subValue {
 					case "identifier":
@@ -720,8 +738,10 @@ func (r *RedisSearch) Info(indexName string) *RedisSearchIndexInfo {
 						field.TagSeparator = def[subKey+1].(string)
 					}
 				}
+
 				fields[i] = field
 			}
+
 			info.Fields = fields
 		case "num_docs":
 			if !math.IsNaN(res[i+1].(float64)) {
@@ -792,6 +812,7 @@ func (r *RedisSearch) Info(indexName string) *RedisSearchIndexInfo {
 		case "stopwords_list":
 			v := res[i+1].([]interface{})
 			info.StopWords = make([]string, len(v))
+
 			for i, v := range v {
 				info.StopWords[i] = v.(string)
 			}
@@ -818,6 +839,7 @@ func (r *RedisSearch) fillLogFields(handlers []beeorm.LogHandler, operation, que
 	fillLogFields(r.engine, handlers, r.redis.GetCode(), "redis", operation, query, start, false, err)
 }
 
+// nolint: gocyclo, funlen // info
 func (r *RedisSearch) GetRedisSearchAlters() (alters []RedisSearchIndexAlter) {
 	alters = make([]RedisSearchIndexAlter, 0)
 
@@ -1105,8 +1127,15 @@ func getNow(has bool) *time.Time {
 	return &s
 }
 
-//nolint // info
-func fillLogFields(engine beeorm.Engine, handlers []beeorm.LogHandler, pool, source, operation, query string, start *time.Time, cacheMiss bool, err error) {
+// nolint: gocyclo // info // info
+func fillLogFields(
+	engine beeorm.Engine,
+	handlers []beeorm.LogHandler,
+	pool, source, operation, query string,
+	start *time.Time,
+	cacheMiss bool,
+	err error,
+) {
 	fields := map[string]interface{}{
 		"operation": operation,
 		"query":     query,
