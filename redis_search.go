@@ -562,10 +562,10 @@ func (r *RedisSearch) ListIndices() []string {
 	return res
 }
 
-// nolint // info
-func (r *RedisSearch) dropIndex(indexName string, withHashes bool) bool {
+func (r *RedisSearch) dropIndex(indexName string, withHashes bool) {
 	indexName = r.redis.AddNamespacePrefix(indexName)
 	args := []interface{}{"FT.DROPINDEX", indexName}
+
 	if withHashes {
 		args = append(args, "DD")
 	}
@@ -583,18 +583,16 @@ func (r *RedisSearch) dropIndex(indexName string, withHashes bool) bool {
 	}
 
 	if err != nil && strings.HasPrefix(err.Error(), "Unknown Index ") {
-		return false
+		return
 	}
 
 	checkError(err)
 
 	_, err = cmd.Result()
 	checkError(err)
-
-	return true
 }
 
-// nolint // info
+//nolint // info
 func (r *RedisSearch) Info(indexName string) *RedisSearchIndexInfo {
 	indexName = r.redis.AddNamespacePrefix(indexName)
 	cmd := redis.NewSliceCmd(r.ctx, "FT.INFO", indexName)
@@ -1107,7 +1105,7 @@ func getNow(has bool) *time.Time {
 	return &s
 }
 
-// nolint // info
+//nolint // info
 func fillLogFields(engine beeorm.Engine, handlers []beeorm.LogHandler, pool, source, operation, query string, start *time.Time, cacheMiss bool, err error) {
 	fields := map[string]interface{}{
 		"operation": operation,
