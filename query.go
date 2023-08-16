@@ -48,7 +48,7 @@ func (r *RedisSearch) RedisSearchIds(entity beeorm.Entity, query *RedisSearchQue
 	return redisSearchQuery(r, schema, query, pager)
 }
 
-func (r *RedisSearch) RedisSearchMany(
+func (r *RedisSearch) RedisSearch(
 	query *RedisSearchQuery,
 	pager *beeorm.Pager,
 	entities interface{},
